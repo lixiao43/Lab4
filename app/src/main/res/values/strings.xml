@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Lab3</string>
+    <string name="asterisk">*</string>
+    <string name="cart">购物车</string>
+    <string name="price">价格</string>
+    <string name="more">更多产品信息</string>
+</resources>
