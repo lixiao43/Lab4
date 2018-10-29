@@ -36,24 +36,26 @@ public class CartAdapter extends BaseAdapter {
         return i;
     }
     @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
+    public View getView(int position, View view, ViewGroup viewGroup) {//获取数据项的布局样式
         View convertView;
         ViewHolder holder;
-        if (view == null) {
+        if (view == null) {//view为空时才加载布局，并创建一个viewHolder
             convertView = LayoutInflater.from(context).inflate(R.layout.cart_item, null);
+            //通过inflate的方法加载布局
             holder = new ViewHolder();
-            holder.pri =(TextView)convertView.findViewById(R.id.firstLetter);
-            holder.fir = (TextView) convertView.findViewById(R.id.name);
-            holder.nam = (TextView) convertView.findViewById(R.id.price);
-            convertView.setTag(holder);
-        } else {
+            holder.pri =convertView.findViewById(R.id.firstLetter);
+            holder.fir =convertView.findViewById(R.id.name);
+            holder.nam =convertView.findViewById(R.id.price);
+            convertView.setTag(holder);//用setTag的方法将处理好的viewHolder放入view中
+        } else {//否则让convertView等于view，然后从中取出viewHolder
             convertView = view;
             holder = (ViewHolder) convertView.getTag();
         }
+        //从viewHolder中取出对应的对象，然后赋值给它们
         holder.pri.setText(cargood.get(position).getName().substring(0,1).toUpperCase());
         holder.fir.setText(cargood.get(position).getName());
         holder.nam.setText(cargood.get(position).getprice());
-        return convertView;
+        return convertView;//返回处理好的view
     }
     private class ViewHolder {
         public TextView fir;

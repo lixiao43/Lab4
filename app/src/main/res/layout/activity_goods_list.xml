@@ -78,13 +78,13 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/c"
                 android:layout_alignBottom="@+id/c"
+                android:layout_marginStart="153dp"
                 android:layout_marginLeft="153dp"
+                android:layout_toEndOf="@+id/c"
                 android:layout_toRightOf="@+id/c"
                 android:text="@string/price"
                 android:textColor="#000000"
-                android:textSize="20sp"
-                android:layout_marginStart="153dp"
-                android:layout_toEndOf="@+id/c" />
+                android:textSize="20sp" />
         </RelativeLayout>
 
         <ListView

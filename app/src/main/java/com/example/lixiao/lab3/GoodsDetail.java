@@ -10,6 +10,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 
 public class GoodsDetail extends AppCompatActivity {
@@ -21,7 +23,7 @@ public class GoodsDetail extends AppCompatActivity {
         setContentView(R.layout.activity_goods_detail);
 
         final Intent intent = getIntent();
-        setResult(1,intent);
+        //setResult(1,intent);
 
         final String ShowName = intent.getStringExtra("Name");
         final String Price = intent.getStringExtra("Price");
@@ -30,43 +32,58 @@ public class GoodsDetail extends AppCompatActivity {
         final String[] s = new String[]{"一键下单","分享商品","不感兴趣","查看更多促销信息"};
         ArrayList ss = new ArrayList<String>();
         for(int i=0; i<s.length; i++) ss.add(s[i]);
+
         ListView llv = (ListView)findViewById(R.id.function);
         MoreInfAdapter fun = new MoreInfAdapter(GoodsDetail.this, ss);
         llv.setAdapter(fun);
 
+        final Bundle mBundle = new Bundle();
         ImageView img = (ImageView)findViewById(R.id.pic);
         switch (ShowName){
             case "Enchated Forest":
                 img.setImageResource(R.mipmap.enchatedforest);
+                mBundle.putInt("Image",R.mipmap.enchatedforest);
                 break;
             case "Arla Milk":
                 img.setImageResource(R.mipmap.arla);
+                mBundle.putInt("Image",R.mipmap.arla);
                 break;
             case "Devondale Milk":
                 img.setImageResource(R.mipmap.devondale);
+                mBundle.putInt("Image",R.mipmap.devondale);
                 break;
             case "Kindle Oasis":
                 img.setImageResource(R.mipmap.kindle);
+                mBundle.putInt("Image",R.mipmap.kindle);
                 break;
             case "waitrose 早餐麦片":
                 img.setImageResource(R.mipmap.waitrose);
+                mBundle.putInt("Image",R.mipmap.waitrose);
                 break;
             case "Mcvitie's 饼干":
                 img.setImageResource(R.mipmap.mcvitie);
+                mBundle.putInt("Image",R.mipmap.mcvitie);
                 break;
             case "Ferrero Rocher":
                 img.setImageResource(R.mipmap.ferrero);
+                mBundle.putInt("Image",R.mipmap.ferrero);
                 break;
             case "Maltesers":
                 img.setImageResource(R.mipmap.maltesers);
+                mBundle.putInt("Image",R.mipmap.maltesers);
                 break;
             case "Lindt":
                 img.setImageResource(R.mipmap.lindt);
+                mBundle.putInt("Image",R.mipmap.lindt);
                 break;
             case "Borggreve":
                 img.setImageResource(R.mipmap.borggreve);
+                mBundle.putInt("Image",R.mipmap.borggreve);
                 break;
         }
+        mBundle.putString("Name",ShowName);
+        mBundle.putString("Price",Price);
+        mBundle.putString("Info",info);
 
         ImageButton bb = (ImageButton) findViewById(R.id.back);
         bb.setOnClickListener(new View.OnClickListener() {
@@ -98,17 +115,23 @@ public class GoodsDetail extends AppCompatActivity {
             }
         });
 
+        final GoodsInfo shoppingItem = new GoodsInfo(ShowName, info, Price);
         ImageButton shopcart = (ImageButton) findViewById(R.id.addshopcar);
         shopcart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(GoodsDetail.this, "商品已添加到购物车", Toast.LENGTH_SHORT).show();
+               /* Toast.makeText(GoodsDetail.this, "商品已添加到购物车", Toast.LENGTH_SHORT).show();
                 cnt++;
                 intent.putExtra("cnt",cnt);
                 intent.putExtra("na",ShowName);
                 intent.putExtra("Pri",Price);
                 intent.putExtra("info",info);
-                setResult(0, intent);
+                setResult(0, intent);*/
+                Intent intent1 = new Intent("dynamic");
+                intent1.putExtras(mBundle);
+                Toast.makeText(GoodsDetail.this,"商品已添加到购物车",Toast.LENGTH_SHORT).show();
+                sendBroadcast(intent1);
+                EventBus.getDefault().post(new MessageEvent(shoppingItem));
             }
         });
     }
